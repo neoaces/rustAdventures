@@ -7,7 +7,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug",
+            "name": "rust: Debug Rust Program",
             "program": "${workspaceRoot}/restaurant_order/target/debug/restaurant_order",
             "args": [],
             "cwd": "${workspaceRoot}/restaurant_order/target/debug/",
