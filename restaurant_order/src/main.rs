@@ -9,7 +9,7 @@ fn print_menu(vector: &Vec<(&str, f32)>) {
         let price = n.1;
 
         let formatted_text = 
-            format!("{:<12}{:>12}", food, price,);
+            format!("{:<12}{:>12}", food, format_args!("{:.2}", price));
         println!("{}", formatted_text);
 
     }
@@ -19,16 +19,20 @@ fn ask_quantity (vector: &Vec<(&str, f32)>) -> f32 {
     let mut list: f32 = 0.0;
     
     for n in vector.iter() {
-        let mut value = String::new();
+        let mut input = String::new();
         
-        println!("Enter the number of {}", n.0);
+        println!("Enter the number of {}s", n.0);
+        
         stdin()
-            .read_line(&mut value)
+            .read_line(&mut input)
             .expect("Please re-enter the value.");
 
-        let value: f32 = value.trim().parse().expect("hello");
+        let input: f32 = input
+            .trim().parse().expect("hello");
 
-        list = list + value;
+        let item_total: f32 = input * n.1;
+        
+        list = list + item_total;
     }
 
     return list;
@@ -55,10 +59,16 @@ fn main() {
 
     // then we'll ask for the quantity of each item present in the menu, then store the returned value (which is the total in dollars)
     let ask = ask_quantity(&menu);
-    println!("{:?}", ask);
-
+    
     // now to finish off, we first print off the total before tax, which was the return value of ask_quantity(&menu)
     // then store the value of the total * 0.13 (tax at 13%)
     // and lastly, prints off the sum of both the total and the tax!
+    println!("Total before tax: $ {:.2}", ask);
     
+    let tax: f32 = ask * 0.13;
+    println!("HST tax: $ {:.2}", tax);
+    
+    
+    println!("Final total: $ {:.2}", ask + tax);
 }
+// done! ~
